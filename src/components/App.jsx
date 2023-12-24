@@ -17,9 +17,11 @@ class App extends Component {
   };
 
   formSubmitHemdler = ({ name, number }) => {
-    const newContact = { id: nanoid(), name: name, number: number };
+    const newContact = { id: nanoid(), name, number };
 
-    this.state.contacts.find(contact => contact.name === name)
+    this.state.contacts.find(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    )
       ? window.alert(`${name} is alredy in contacts.`)
       : this.setState(prevState => {
           return { contacts: [...prevState.contacts, newContact] };
@@ -39,8 +41,12 @@ class App extends Component {
   };
 
   deleteContact = contactId => {
-    this.setState({
-      contacts: this.state.contacts.filter(contact => contact.id !== contactId),
+    this.setState(prevState => {
+      return {
+        contacts: prevState.contacts.filter(
+          contact => contact.id !== contactId
+        ),
+      };
     });
   };
 
